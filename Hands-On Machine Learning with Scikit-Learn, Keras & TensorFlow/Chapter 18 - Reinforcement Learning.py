@@ -2,7 +2,9 @@
 """
 Created on Wed Aug 25 07:34:09 2021
 
-@author: Z52XXR7
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 18 - Reinforcement Learning
 
@@ -47,6 +49,7 @@ for episode in range(500):
 np.mean(totals), np.std(totals), np.min(totals), np.max(totals)
     
 
+
 #Neural Network Policies
 
 import tensorflow as tf
@@ -56,6 +59,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Dropout
 
 n_inputs = 4 # env.observation
+
 
 # model = keras.models.Sequential[(
 #     keras.layers.Dense(5, activation="elu", input_shape=[n_inputs]),
@@ -121,6 +125,8 @@ discount_factor = 0.95
 optimizer = keras.optimizers.Adam(learning_rate=0.01)
 loss_fn = keras.losses.binary_crossentropy
 
+
+
 # Build and run the training loop
 
 for interation in range(n_interations):
@@ -136,5 +142,4 @@ for interation in range(n_interations):
             for episode_index, final_reward in enumerate(all_final_rewards)
                 for step, final_reward in enumerate(final_reward)], axis=0)
         all_mean_grads.append(mean_grads)
-    optimizer.apply_gradients(zip(all_mean_grads, model.trainable_variables))
-            
+    optimizer.apply_gradients(zip(all_mean_grads, model.trainable_variables))            

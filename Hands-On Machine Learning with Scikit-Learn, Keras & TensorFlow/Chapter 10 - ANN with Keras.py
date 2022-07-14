@@ -2,7 +2,9 @@
 """
 Created on Sat Jun 19 09:16:49 2021
 
-@author: filip
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 10 - Introduction to Artificial Neural Networks with Keras
 
@@ -12,12 +14,15 @@ import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 
-#Fashion MNIST Example
+# Fashion MNIST Example
 
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.fashion_mnist.load_data()
 
-#Split to validation and normalization
+
+
+# Split to validation and normalization
 
 x_valid, x_train = x_train[:5000]/255, x_train[5000:]/255
 y_valid, y_train = y_train[:5000], y_train[5000:]
@@ -26,6 +31,8 @@ x_test = x_test/255
 class_names = ["T-shirt/top","Trouser","Pullover","Dress","Coat","Sandal","Shirt","Sneaker","Bag","Ankle boot"]
 
 class_names[y_train[0]]
+
+
 
 #Creating the model using Sequential API - Classification
 
@@ -52,7 +59,10 @@ weights, bias = hidden1.get_weights()
 weights.shape
 bias.shape
 
-#Train the model
+
+
+# Train the model
+
 model.compile(loss="sparse_categorical_crossentropy",
               optimizer="sgd",
               metrics=["accuracy"])
@@ -65,18 +75,26 @@ plt.grid(True)
 plt.gca().set_ylim(0,1)
 plt.show()
 
-#Evaluate the model
+
+
+
+# Evaluate the model
 model.evaluate(x_test, y_test)
 
-#Make predictions
+
+
+# Make predictions
 
 x_new = x_test[:3]
 y_proba = model.predict(x_new)
 y_proba.round(2)
 
-y_pred = model.predict_classes(x_new)
+y_pred = model.predict(x_new)
+print(y_pred)
 
-#Building a Regression MLP Using the Sequential API
+
+
+# Building a Regression MLP Using the Sequential API
 
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
@@ -108,7 +126,10 @@ mse_test = model.evaluate(X_test, y_test)
 X_new = X_test[:3]
 y_pred = model.predict(X_new)
 
-#Building Complex Models Using the Functional API - Wide & Deep Neural Network
+
+
+
+# Building Complex Models Using the Functional API - Wide & Deep Neural Network
 
 input_ = keras.layers.Input(shape=X_train.shape[1:])
 hidden1 = keras.layers.Dense(30, activation="relu")(input_)
@@ -126,7 +147,10 @@ mse_test = model.evaluate(X_test, y_test)
 X_new = X_test[:3]
 y_pred = model.predict(X_new)
 
-#Model with short and deep path
+
+
+
+# Model with short and deep path
 
 input_A = keras.layers.Input(shape=[5], name="wide_input")
 input_B = keras.layers.Input(shape=[6], name="deep_input")
@@ -149,7 +173,10 @@ history = model.fit((X_train_A, X_train_B), y_train, epochs=20,
 mse_test = model.evaluate((X_test_A, X_test_B), y_test)
 y_pred = model.predict((X_new_A, X_new_B))
 
-#Saving and Restoring a Model
+
+
+
+# Saving and Restoring a Model
 
 model.save("my_keras_model.h5")
 model = keras.models.load_model("my_keras_model.h5")
@@ -170,7 +197,9 @@ history = model.fit(X_train, y_train, epochs = 10,
 
 model = keras. models.load_model("my_keras_model.h5")
 
-#Early Stopping
+
+
+# Early Stopping
 
 model = keras.models.Sequential([
     keras.layers.Dense(30, activation="relu", input_shape=X_train.shape[1:]),
@@ -182,5 +211,3 @@ model.compile(loss="mean_squared_error", optimizer="sgd")
 early_stopping_cb = keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)
 
 history = model.fit(X_train, y_train, epochs=100, validation_data=(X_valid, y_valid), callbacks=[checkpoint_cb, early_stopping_cb])
-
-

@@ -2,11 +2,15 @@
 """
 Created on Mon Aug 16 13:16:30 2021
 
-@author: Z52XXR7
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 16 - Natural Language Processing with RNNs and Attention
 
 """
+
+# packages 
 import tensorflow as tf
 import numpy as np
 from tensorflow import keras
@@ -52,6 +56,9 @@ dataset = dataset.map(lambda windows: (windows[:,:-1], windows[:,1:]))
 dataset = dataset.map(
     lambda X_batch, Y_batch: (tf.one_hot(X_batch, depth=max_id), Y_batch))
     
+
+
+
 #Building and Training the Char-RNN Model
 
 model = keras.models.Sequential([
@@ -64,7 +71,10 @@ model = keras.models.Sequential([
     ])
 
 model.compile(loss="sparse_categorical_crossentropy",optimizer="adam")
-history = model.fit(dataset, epochs=20)
+history = model.fit(dataset, epochs=1)
+
+
+
 
 # Using the Char-RNN Model
 
@@ -75,6 +85,9 @@ def preprocess(texts):
 X_new = preprocess(["How are yo"])
 Y_pred = model.predict_classes(X_new)
 tokenizer.sequences_to_texts(Y_pred + 1)[0][-1]
+
+
+
 
 
 # Sentiment Analysis

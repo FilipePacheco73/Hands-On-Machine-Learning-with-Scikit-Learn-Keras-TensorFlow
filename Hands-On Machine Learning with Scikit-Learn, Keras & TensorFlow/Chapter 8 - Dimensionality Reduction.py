@@ -2,7 +2,9 @@
 """
 Created on Sat May 22 13:43:55 2021
 
-@author: filip
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 8 - Dimensionality Reduction
 
@@ -12,22 +14,25 @@ Chapter 8 - Dimensionality Reduction
 
 import numpy as np
 from sklearn.datasets import fetch_openml
+from sklearn.model_selection import train_test_split
 
-#Download do dataset - disponível na Web
+# Download do dataset - Available on Web
 mnist = fetch_openml('mnist_784',version=1)
 mnist.keys()
 
-#Import dataset
+# Import dataset
 
 X,y = mnist["data"], mnist["target"]
 
 X = np.array(X)
 y = np.array(y)
 
-#Train the Classifier
-X_train, X_test, y_train, y_test = X[:60000], X[60000:], y[:60000], y[60000:]
 
-X_centered = X - X.mean(axis=0)
+# Linear Singular Value Decomposition - SVD
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = .15, random_state = 42)
+
+X_centered = X_test - X_test.mean(axis=0)
 
 U, s, Vt = np.linalg.svd(X_centered)
 
@@ -36,6 +41,9 @@ c2 = Vt.T[:,1]
 
 W2 = Vt.T[:,:2]
 X2D = X_centered.dot(W2)
+
+
+# Principal Component Analysis - PCA
 
 from sklearn.decomposition import PCA
 
@@ -84,5 +92,4 @@ X_reduced = inc_pca.transform(X_train)
 from sklearn.decomposition import KernelPCA
 
 rbf_pca = KernelPCA(n_components = 2, kernel = "rbf", gamma = .04)
-X_reduced = rbf_pca.fit_transform(X)
-
+X_reduced = rbf_pca.fit_transform(X_test)

@@ -2,7 +2,9 @@
 """
 Created on Sat Jun  5 10:39:57 2021
 
-@author: filip
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 9 - Unsupervised Learning Technique
 
@@ -28,11 +30,15 @@ X_new = np.array([[0,2],[3,2],[-3,3],[-3,2.5]])
 
 kmeans.predict(X_new)
 
-#Distances from each instance to every centroid
+
+
+# Distances from each instance to every centroid
 
 kmeans.transform(X_new)
 
-#Choose the best initial centroids
+
+
+# Choose the best initial centroids
 
 good_init = np.array([[-3,3],[-3,2],[-3,1],[-1,2],[0,2]])
 kmeans = KMeans(n_clusters=5, init = good_init, n_init = 1)
@@ -42,17 +48,21 @@ from sklearn.cluster import MiniBatchKMeans
 minibatch_kmeans = MiniBatchKMeans(n_clusters = 5)
 minibatch_kmeans.fit(X)
 
-#Silhouette Score
+
+
+# Silhouette Score
 
 from sklearn.metrics import silhouette_score
-silhouette_score(X, kmeans.labels_)
+silhouette_score(X, minibatch_kmeans.labels_)
 
-#Using clustering for Image Segmentation
+
+
+# Using clustering for Image Segmentation
 
 from matplotlib.image import imread
 import os 
 
-image = imread(os.path.join("images","unsupervisedlearning","ladybug.png"))
+image = imread("ladybug.png")
 
 X = image.reshape(-1,3)
 
@@ -61,7 +71,8 @@ kmeans = KMeans(n_clusters=8).fit(X)
 segmented_img = kmeans.cluster_centers_[kmeans.labels_]
 segmented_img = segmented_img.reshape(image.shape)
 
-#Using Clustering for Preprocessing
+
+# Using Clustering for Preprocessing
 
 from sklearn.datasets import load_digits
 
@@ -77,7 +88,7 @@ log_reg.fit(X_train, y_train)
 
 log_reg.score(X_test,y_test)
 
-#Increase accuracy by KMeans++
+# Increase accuracy by KMeans++
 
 from sklearn.pipeline import Pipeline
 
@@ -89,14 +100,15 @@ pipeline.score(X_test, y_test)
 
 from sklearn.model_selection import GridSearchCV
 
-param_grid = dict(kmeans__n_clusters=range(2,100))
+param_grid = dict(kmeans__n_clusters=range(2,50))
 grid_clf = GridSearchCV(pipeline,param_grid, cv=3, verbose=2)
 grid_clf.fit(X_train, y_train)
 
 grid_clf.best_params_
 grid_clf.score(X_test,y_test)
 
-#Using Clustering for Semi-Supervised Learning
+
+# Using Clustering for Semi-Supervised Learning
 
 n_labeled = 50
 log_reg = LogisticRegression()
@@ -115,6 +127,8 @@ y_representative_digits = np.array([4,8,0,6,8,3,7,7,9,1,5,5,8,5,2,1,2,9,6,1,1,6,
 log_reg = LogisticRegression()
 log_reg.fit(X_representative_digits, y_representative_digits)
 log_reg.score(X_test, y_test)
+
+
 
 #DBSCAN
 
@@ -141,6 +155,8 @@ X_new = np.array([[-0.5,0],[0,0.5],[1,-0.1],[2,1]])
 knn.predict(X_new)
 knn.predict_proba(X_new)
 
+
+
 #Gaussian Mixtures
 
 from sklearn.mixture import GaussianMixture
@@ -154,4 +170,3 @@ gm.covariances_
 
 gm.predict(X)
 gm.predict_proba(X)
-ente

@@ -2,7 +2,9 @@
 """
 Created on Sun May 16 12:37:04 2021
 
-@author: filip
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 7 - Ensemble Learning and Random Forest
 
@@ -15,9 +17,9 @@ from sklearn.svm import SVC
 from sklearn.datasets import make_moons
 from sklearn.model_selection import train_test_split
 
-#Voting Classifiers - Conjunto de classificadores
+#Voting Classifiers - Set of classifiers
 
-X, y = make_moons(n_samples=200, noise=.15)  
+X, y = make_moons(n_samples=1000, noise=.15)  
 
 X_train, X_test, y_train, y_test = train_test_split(X,y)
 
@@ -38,6 +40,7 @@ for clf in (log_clf, rnd_clf, svm_clf, voting_clf):
     
 
 #Bagging and Pasting in Scikit-Learn
+
 from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 
@@ -47,6 +50,10 @@ bag_clf = BaggingClassifier(
 
 bag_clf.fit(X_train, y_train)
 y_pred = bag_clf.predict(X_test)
+
+accuracy_score(y_test,y_pred)
+
+
 
 #Out-of-Bag Evaluation
 
@@ -63,6 +70,7 @@ accuracy_score(y_test, y_pred)
 
 bag_clf.oob_decision_function_
 
+
 #Random Forest
 
 from sklearn.ensemble import RandomForestClassifier
@@ -77,6 +85,7 @@ bag_clf = BaggingClassifier(
     n_estimators=500, max_samples=1, bootstrap=True, n_jobs=-1)
 
 
+
 #Feature Importance
 
 from sklearn.datasets import load_iris
@@ -85,6 +94,8 @@ rnd_clf = RandomForestClassifier(n_estimators=500, n_jobs=-1)
 rnd_clf.fit(iris["data"],iris["target"])
 for name, score in zip(iris["feature_names"], rnd_clf.feature_importances_):
     print(name, score)
+    
+    
     
 #Adaboost
 
@@ -96,3 +107,4 @@ ada_clf = AdaBoostClassifier(
 
 ada_clf.fit(X_train, y_train)
 
+accuracy_score(y_test, ada_clf.predict(X_test))

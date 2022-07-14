@@ -2,9 +2,13 @@
 """
 Created on Sat Apr 10 14:11:00 2021
 
-@author: filip
+@author: Filipe Pacheco
 
-Identificação de padrões com números
+Hands-On Machine Learning
+
+Chapter 3 - Classificaiton 
+
+Identify number patterns 
 
 """
 
@@ -17,9 +21,9 @@ from sklearn.datasets import fetch_openml
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import StratifiedKFold
 from sklearn.base import clone
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_score, cross_val_predict
 
-#Download do dataset - disponível na Web
+#dataset download - available in web
 mnist = fetch_openml('mnist_784',version=1)
 mnist.keys()
 
@@ -40,7 +44,10 @@ y[0]
 
 y = y.astype(np.uint8)
 
+
+
 #Train the Classifier
+
 X_train, X_test, y_train, y_test = X[:60000], X[60000:], y[:60000], y[60000:]
 
 y_train_5 = (y_train == 5)
@@ -50,6 +57,8 @@ sgd_clf = SGDClassifier(random_state = 42)
 sgd_clf.fit(X_train, y_train_5)
 
 sgd_clf.predict([some_digit])
+
+
 
 #Implementing cross-validation to measure the models performance
 
@@ -69,6 +78,9 @@ for train_index, test_index in skfolds.split(X_train, y_train_5):
     
 cross_val_score(sgd_clf,X_train,y_train_5,cv=3,scoring="accuracy")
 
+
+
+
 #Confusion Matrix - another way to measure the performance
 
 from sklearn.metrics import confusion_matrix
@@ -83,6 +95,9 @@ precision_score(y_train_5, y_train_pred)
 recall_score(y_train_5, y_train_pred)
 
 f1_score(y_train_5, y_train_pred)
+
+
+
 
 #Precision/Recall trade-off
 
@@ -106,6 +121,9 @@ y_train_pred_90 = (y_scores >= threshold_90_precision)
 precision_score(y_train_5, y_train_pred_90)
 recall_score(y_train_5, y_train_pred_90)
 
+
+
+
 #ROC curve
 
 from sklearn.metrics import roc_curve
@@ -117,6 +135,9 @@ def plot_roc_curve(fpr, tpr, label = None):
     plt.plot([0,1],[0,1], "k--")
 
 plot_roc_curve(fpr, tpr)
+
+
+
 
 #Random Forest Classifier 
 
@@ -133,7 +154,9 @@ plt.plot(fpr, tpr, "b:", label="SGD")
 plot_roc_curve(fpr_forest, tpr_forest, "Random Forest")
 plt.legend(loc="lower right")
 
-"""
+
+
+
 #Multiclass Classification
 
 from sklearn.svm import SVC
@@ -174,10 +197,9 @@ conf_mx = confusion_matrix(y_train, y_train_pred)
 
 plt.matshow(conf_mx, cmap=plt.cm.gray)
 
-row_sums = conf_mx.sum(axis =1 , keepdims=True)
+row_sums = conf_mx.sum(axis = 1 , keepdims=True)
 
 norm_conf_mx = conf_mx / row_sums
 
-np.fill_diagonal(norm_conf,mx, 0)
+np.fill_diagonal(norm_conf_mx, 0)
 plt.matshow(norm_conf_mx, cmap=plt.cm.gray)
-"""

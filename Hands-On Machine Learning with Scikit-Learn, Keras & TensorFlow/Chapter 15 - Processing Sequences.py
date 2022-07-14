@@ -2,7 +2,9 @@
 """
 Created on Fri Aug 13 09:43:40 2021
 
-@author: Z52XXR7
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 15 - Processing Sequences Using RNNs and CNNs
 
@@ -61,4 +63,3 @@ X = X_new
 for step_ahead in range(10):
     y_pred_one = model.predict(X[:, step_ahead:])[:,np.newaxis,:]
     
-

@@ -23,9 +23,11 @@ from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
 from pandas.plotting import scatter_matrix
 
 # Original path to download the dataset
+
 """
 DOWNLOAD_PATH = "https://github.com/ageron/handson-ml2/tree/master/"
 HOUSING_PATH = os.path.join("datasets","housing")
@@ -95,6 +97,7 @@ plt.legend()
     
 
 #Looking for correlations - Person's
+
 corr_matrix = housing.corr()
 corr_matrix["median_house_value"].sort_values(ascending=False)
 
@@ -103,22 +106,44 @@ scatter_matrix(housing[attributes], figsize=(12,8))
 
 housing.plot(kind="scatter", x="median_income", y="median_house_value", alpha=0.1)
 
-#data cleaning
+#data cleasing
+
 housing = strat_train_set.drop("median_house_value",axis=1)
 housing_labels = strat_train_set["median_house_value"].copy()
 
+#Treating missing fields - possibilies
+ 
+#option 1
+# housing.dropna(subset=["total_bedrooms"]) 
 
-housing.dropna(subset=["total_bedrooms"]) #options1
-#housing.drop("total_bedrooms",axis1) #options2
-#median = housing["total_bedrooms"].median #options3
-#housing["total_bedrooms"].fillna(median,inplace=True)
+#options 2
+# housing.drop("total_bedrooms",axis1) 
 
-imputer = SimplerImputer(strategy="median")
+#option 3
+median = housing["total_bedrooms"].median()
+housing["total_bedrooms"].fillna(median,inplace=True)
 
+#option 4
+# imputer = SimpleImputer(missing_values=np.nan,strategy="mean") #option 4
+# imputer.fit(housing.iloc[:,:8])
+# housing_treated = (imputer.transform(housing.iloc[:,:8]))
+
+# creating output data as integer
 ordinal_enconder = OrdinalEncoder()
 housing_cat_encoded = ordinal_enconder.fit_transform(housing[["ocean_proximity"]])
 
-#Linear Regression
+# split train and test data for validation
+
+X = np.array(housing.iloc[:,:8]) # data as input
+y = housing_cat_encoded # data as output
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_state=42) 
+
+#Linear Regression - train and test
 
 lin_reg = LinearRegression()
-#in_reg.fit
+lin_reg.fit(X_train, y_train)
+
+# Evaluation of the training
+r2score = r2_score(y_test, lin_reg.predict(X_test)) 
+print(r2score)

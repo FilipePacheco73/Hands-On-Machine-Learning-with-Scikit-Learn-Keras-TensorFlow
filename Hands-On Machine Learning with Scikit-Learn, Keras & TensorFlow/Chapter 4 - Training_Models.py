@@ -2,7 +2,9 @@
 """
 Created on Sat Apr 24 13:53:59 2021
 
-@author: filip
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 4 - Training Models
 
@@ -28,6 +30,8 @@ plt.scatter(X,y)
 plt.ylim(0,14)
 plt.show()
 
+
+
 #Solving the Normal Equation
 X_b = np.c_[np.ones((100,1)),X]
 theta_best = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y)
@@ -41,6 +45,8 @@ plt.plot(X_new, y_predict, "r-")
 plt.plot(X,y, "b.")
 plt.axis([0,2,0,15])
 
+
+
 #Linear Regression using Scikit-Learn
 from sklearn.linear_model import LinearRegression
 lin_reg = LinearRegression()
@@ -48,6 +54,8 @@ lin_reg.fit(X,y)
 lin_reg.intercept_,lin_reg.coef_
 
 lin_reg.predict(X_new)
+
+
 
 #Linear Regression is based on Least Squares
 theta_best_svd, residuals, rank, s = np.linalg.lstsq(X_b,y,rcond=1e-6)
@@ -66,12 +74,16 @@ for i in range(n_interations):
     gradients = (2/m)*X_b.T.dot(X_b.dot(theta)-y)
     theta = theta - alpha*gradients
     
+    
+    
 #SGD Regressor
 from sklearn.linear_model import SGDRegressor
 
 sgd_reg = SGDRegressor(max_iter=2000, tol=1e-3, penalty=None, eta0=0.1)
 sgd_reg.fit(X,y.ravel())
 sgd_reg.intercept_, sgd_reg.coef_
+
+
 
 #Polynomial Regression
 m = 100
@@ -93,8 +105,7 @@ lin_reg.fit(X_poly, y)
 lin_reg.intercept_,lin_reg.coef_
 
 Yhat = lin_reg.predict(X_poly)
-
-    
+ 
 plt.scatter(X,y)
 plt.plot(X,Yhat,color='red')
 plt.ylim(0,10)
@@ -121,6 +132,8 @@ plt.plot(X,Yhat,color='red')
 plt.plot(X,Yhat1,color='blue')
 plt.plot(X,Yhat2,color='green')
 plt.ylim(0,10)
+
+
 
 #learning curves
 
@@ -153,8 +166,13 @@ polynomial_regression = Pipeline([
 
 plot_learning_curves(polynomial_regression, X,y)
 
+
+
+
 #Regularization
 #Closed form: André-Louis Cholesky
+
+
 
 from sklearn.linear_model import Ridge
 ridge_reg = Ridge(alpha=.1, solver="cholesky")
@@ -169,17 +187,23 @@ plt.scatter(X,y)
 plt.scatter(ridge_reg.predict(X),y)
 plt.scatter(sgd_reg.predict(X),y)
 
+
+
 #Lasso Regression
 from sklearn.linear_model import Lasso
 lasso_reg = Lasso(alpha=0.1)
 lasso_reg.fit(X,y)
 lasso_reg.predict([[1.5]])
 
+
+
 #Elastic Net
 from sklearn.linear_model import ElasticNet
 elastic_net = ElasticNet(alpha=.1,l1_ratio=0.5)
 elastic_net.fit(X,y)
 elastic_net.predict([[1.5]])
+
+
 
 #Early Stopping
 from sklearn.base import clone
@@ -208,6 +232,8 @@ for epoch in range(1000):
         minimum_val_error = val_error
         best_epoch = epoch
         best_model = clone(sgd_reg)
+        
+        
         
         
 #Logistic regression

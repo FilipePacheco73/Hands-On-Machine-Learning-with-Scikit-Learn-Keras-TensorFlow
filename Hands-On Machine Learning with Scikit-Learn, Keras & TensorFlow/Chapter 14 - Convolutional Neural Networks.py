@@ -2,7 +2,9 @@
 """
 Created on Thu Aug  5 07:26:21 2021
 
-@author: Z52XXR7
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 14 - Deep Computer Vision Using Convulutional Neural Networks
 
@@ -17,6 +19,8 @@ from matplotlib import pyplot as plt
 
 from sklearn.datasets import load_sample_image 
 
+
+
 #Load sample images
 
 china = load_sample_image("china.jpg")/255
@@ -25,7 +29,10 @@ flower = load_sample_image("flower.jpg")/255
 images = np.array([china,flower])
 batch_size, height, width, channels = images.shape
 
+
+
 #Create 2 filters
+
 filters = np.zeros(shape=(7, 7, channels, 2), dtype=np.float32)
 filters[:,3,:,0] = 1 # vertical line
 filters[3,:,:,1] = 1 # horizontal line

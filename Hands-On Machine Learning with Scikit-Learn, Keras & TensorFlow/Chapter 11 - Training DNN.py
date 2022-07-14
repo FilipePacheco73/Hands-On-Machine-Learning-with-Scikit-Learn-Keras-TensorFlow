@@ -2,7 +2,9 @@
 """
 Created on Sun Jul 11 10:49:00 2021
 
-@author: filip
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 11 - Training Deep Neural Networks
 

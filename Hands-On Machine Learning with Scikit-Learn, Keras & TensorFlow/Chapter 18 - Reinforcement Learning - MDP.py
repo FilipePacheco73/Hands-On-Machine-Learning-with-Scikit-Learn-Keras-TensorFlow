@@ -2,7 +2,9 @@
 """
 Created on Wed Aug 25 07:34:09 2021
 
-@author: Z52XXR7
+@author: Filipe Pacheco
+
+Hands-On Machine Learning
 
 Chapter 18 - Reinforcement Learning - MDP
 
@@ -22,7 +24,9 @@ rewards = [ # shape=[s,a,s']
 
 possible_actions = [[0,1,2],[0,2],[1]]
 
-#Set up initial Q-values, Q-values impossible set as -infinity
+
+
+#Set up initial Q-values, Q-values impossible set as - infinity
 
 Q_values = np.full((3,3), -np.inf) # -np.inf for impossible actions
 
@@ -42,7 +46,10 @@ for interation in range(50):
             
 np.argmax(Q_values, axis=1) # optimial action for each state
 
+
+
 # Q-Learning
+
 def step(state, action):
     probas = transition_probabilities[state][action]
     next_state = np.random.choice([0,1,2], p=probas)
@@ -65,4 +72,3 @@ for interation in range(10000):
     Q_values[state, action] *= 1 - alpha
     Q_values[state, action] += alpha*(reward + gamma*next_value)
     state = next_state
-

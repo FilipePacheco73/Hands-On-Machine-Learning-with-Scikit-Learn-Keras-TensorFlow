@@ -33,20 +33,6 @@ The repository is organized as follows:
 Hands-On-Machine-Learning-with-Scikit-Learn-Keras-TensorFlow/
 │
 
-├── Chapter 10 - ANN with Keras.py
-
-├── Chapter 11 - Training DNN.py
-
-├── Chapter 14 - Convolutional Neural Networks.py
-
-├── Chapter 15 - Processing Sequences.py
-
-├── Chapter 16 - NLP_RNN.py
-
-├── Chapter 18 - Reinforcement Learning - MDP.py
-
-├── Chapter 18 - Reinforcement Learning.py
-
 ├── Chapter 2 - Housing_price_regression.py
 
 ├── Chapter 3 - MNIST Classification.py
@@ -62,6 +48,20 @@ Hands-On-Machine-Learning-with-Scikit-Learn-Keras-TensorFlow/
 ├── Chapter 8 - Dimensionality Reduction.py
 
 ├── Chapter 9 - Unsupervised Learning Technique.py
+
+├── Chapter 10 - ANN with Keras.py
+
+├── Chapter 11 - Training DNN.py
+
+├── Chapter 14 - Convolutional Neural Networks.py
+
+├── Chapter 15 - Processing Sequences.py
+
+├── Chapter 16 - NLP_RNN.py
+
+├── Chapter 18 - Reinforcement Learning - MDP.py
+
+├── Chapter 18 - Reinforcement Learning.py
 
 ├── housing.csv
 
